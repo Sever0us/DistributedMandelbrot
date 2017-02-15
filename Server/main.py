@@ -29,7 +29,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.error404()
 
     def do_POST(self):
-        if  self.path.startswith('/api/submit_result'):
+        if  self.path == '/api/submit_result'):
             self.submit_result()
         else:
             self.error404()
@@ -41,7 +41,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         # Get a job and assign a unique job number 
         try:
             response = {}
-            for i in range(1000):
+            for i in range(10):
                 job = jobs.__next__()
                 response[counter] = {'x':job[0], 'y':job[1]}
                 counter += 1 
@@ -59,7 +59,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write('done'.encode())
 
     def submit_result(self):
-        jobs = self.path.strip('/api/submit_result').split('/')
+        for i in self.rfile.read():
+            print(i)
 
         for job in jobs:
             job = job.split('-')

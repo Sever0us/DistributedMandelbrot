@@ -36,9 +36,4 @@ class worker:
 		return 0
 
 	def submit_response(self, jobs):
-		response = self.address+'/api/submit_result'
-
-		for job_number in jobs:
-			response += '/' + str(job_number) + '-' + str(jobs[job_number])
-
-		requests.post(response)
+		requests.post(self.address+'/api/submit_result', body=jobs)
