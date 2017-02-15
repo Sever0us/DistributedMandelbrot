@@ -59,19 +59,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write('done'.encode())
 
     def submit_result(self):
-        for i in self.rfile.read():
-            print(i)
-
-        for job in jobs:
-            job = job.split('-')
-            job_number = int(job[0])
-            value = float(job[1])
-            results[job_number] = value
-            self.send_response(200)
-            self.send_header('Content-type','text/plain')
-            self.end_headers()
-            self.wfile.write('received'.encode())
-
+        content_length = int(self.headers['Content-Length'])
+        post_data = self.rfile.read(content_length)
+        
+        self.send_response(200)
+        self.send_header('Content-type','text/plain')
+        self.end_headers()
+        self.wfile.write('received'.encode())
+        
     def error404(self):
         self.send_response(404)
         self.send_header('Content-type','text/html')

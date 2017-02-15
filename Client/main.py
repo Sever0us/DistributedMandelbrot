@@ -12,5 +12,3 @@ if __name__ == '__main__':
 	    print(workerInstance.counter)
 	    if result is False:
 	    	break
-
-	    break
