@@ -12,7 +12,7 @@ resolution = 100
 # Create jobs
 cx, cy, r =  -0.74529, 0.113075, 1.5E-4
 x = np.linspace(cx-r, cx+r, resolution)
-y = np.linspace(xy-r, cy+r, resolution)
+y = np.linspace(cy-r, cy+r, resolution)
 jobs = product(x, y)
 counter = 0
 
