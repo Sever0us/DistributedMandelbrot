@@ -29,7 +29,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.error404()
 
     def do_POST(self):
-        if  self.path == '/api/submit_result'):
+        if  self.path == '/api/submit_result':
             self.submit_result()
         else:
             self.error404()
