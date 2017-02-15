@@ -40,4 +40,4 @@ class worker:
         return 0
 
     def submit_response(self, jobs):
-        requests.post(self.address+'/api/submit_result', data=jobs)
+        requests.post(self.address+'/api/submit_result', data=json.dumps(jobs).encode())

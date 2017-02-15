@@ -61,6 +61,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def submit_result(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
+        post_data = json.loads(post_data.encode())
         
         self.send_response(200)
         self.send_header('Content-type','text/plain')
