@@ -56,7 +56,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write('done'.encode())
 
-    def submit_result(self, job_number, value):
+    def submit_result(self):
         jobs = self.path.strip('/api/submit_result').split('/')
 
         for job in jobs:
