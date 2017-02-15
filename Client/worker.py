@@ -41,3 +41,14 @@ class worker:
 
     def submit_response(self, jobs):
         requests.post(self.address+'/api/submit_result', data=json.dumps(jobs).encode())
+
+
+    def get_image_resolution(self):
+        response = requests.get(self.address+'/api/get_image_resolution')
+        return int(response.text.decode())
+
+
+    def get_image_resolution(self):
+        response = requests.get(self.address+'/api/get_image_data')
+        
+        if response.text
