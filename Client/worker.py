@@ -9,6 +9,7 @@ class worker:
 	@rate_limited
 	def register(self):
 		response = requests.get(self.address+'/api/register')
+		print('Cool! I am ' + response.text)
 		return response.text
 
 	@rate_limited
