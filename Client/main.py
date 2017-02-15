@@ -8,9 +8,9 @@ def write_file(image_array):
 	if not os.path.isdir('renders'):
 	    os.mkdir('renders') 
 
-	uid = str(random.randint(100000))
+	uid = str(random.randint(0, 100000))
 
-	scipy.misc.imsave(os.path.join('temp', 'render_{}.jpg'.format(uid)), image)
+	scipy.misc.imsave(os.path.join('renders', 'render_{}.jpg'.format(uid)), image_array)
 
 if __name__ == '__main__':
     # Institute a max polling rate for all requests
