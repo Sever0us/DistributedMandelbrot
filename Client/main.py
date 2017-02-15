@@ -7,4 +7,8 @@ if __name__ == '__main__':
 
     workerInstance = worker('http://ec2-54-149-191-82.us-west-2.compute.amazonaws.com:80')
 
-    workerInstance.get_job()
+    while True:
+	    result = workerInstance.get_job()
+
+	    if result is False:
+	    	break

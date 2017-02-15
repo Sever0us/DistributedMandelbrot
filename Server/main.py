@@ -27,9 +27,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.error404()
 
     def do_POST(self):
-        url = self.path.split('/')
-        if  url[2] == 'submit_result':
-            self.submit_result(url[3], url[4])
+        if  self.path.startswith('/api/submit_result'):
+            self.submit_result()
         else:
             self.error404()
 
@@ -39,14 +38,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         # Get a job and assign a unique job number 
         try:
-            job = jobs.__next__()
-            job_number = counter
-            counter += 1 
-
-            response = {'job_number':job_number,
-                        'x':job[0],
-                        'y':job[1]}
-
+            response = {}
+            for i in range(50):
+                job = jobs.__next__()
+                response[counter] = {'x':job[0], 'y':job[1]}
+                counter += 1 
+                
             self.send_response(200)
             self.send_header('Content-type','text/plain')
             self.end_headers()
@@ -60,13 +57,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write('done'.encode())
 
     def submit_result(self, job_number, value):
-        job_number = int(job_number)
-        value = float(value)
-        results[job_number] = value
-        self.send_response(200)
-        self.send_header('Content-type','text/plain')
-        self.end_headers()
-        self.wfile.write('received'.encode())
+        jobs = self.path.strip('/api/submit_result').split('/')
+
+        for job in jobs:
+            job = job.split('-')
+            job_number = int(job[0])
+            value = float(job[1])
+            results[job_number] = value
+            self.send_response(200)
+            self.send_header('Content-type','text/plain')
+            self.end_headers()
+            self.wfile.write('received'.encode())
 
     def error404(self):
         self.send_response(404)

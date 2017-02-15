@@ -9,13 +9,19 @@ class worker:
 	@rate_limited
 	def get_job(self):
 		response = requests.get(self.address+'/api/get_job')
+		if response.text == 'done':
+			return False
 		data = json.loads(response.text)
 
-		calculated_value = self.compute(data['x'], data['y'])
+		calculated_values = {}
+		for job_number in data:
+			r = self.compute(data[job_number]['x'], data[job_number]['y'])
+			print((data[job_number]['x'], data[job_number]['y']), 'is', r)
+			calculated_values[job_number] = r
+		
+		self.submit_response(calculated_values)
 
-		print((data['x'], data['y']), 'is', calculated_value)
-
-		self.submit_response(data['job_number'], calculated_value)
+		return True
 
 	def compute(self, x, y):
 		z = complex(x, y)
@@ -28,6 +34,10 @@ class worker:
 
 		return 0
 
-	def submit_response(self, job_number, value):
-		response = self.address+'/api/submit_result/{}/{}'.format(job_number, value)
+	def submit_response(self, jobs):
+		response = self.address+'/api/submit_result'
+
+		for job_number in jobs:
+			response += '/' + str(job_number) + '-' + str(jobs[job_number])
+
 		requests.post(response)
