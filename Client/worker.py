@@ -2,7 +2,6 @@ from tools import rate_limited
 import requests
 import json
 import numpy as np
-import scipy.misc
 
 class worker:
     def __init__(self, address):
@@ -66,5 +65,5 @@ class worker:
             if pixel_list:
             	break
 
-        image = np.reshape(pixel_list, (-1, resolution))
-        scipy.misc.imsave('render.jpg', image)
+        return np.reshape(pixel_list, (-1, resolution))
+        

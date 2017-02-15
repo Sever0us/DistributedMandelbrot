@@ -44,7 +44,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         # Get a job and assign a unique job number 
         response = {}
-        for i in range(1000):
+        for i in range(10000):
             try:
                 job = jobs.__next__()
                 response[counter] = {'x':job[0], 'y':job[1]}
