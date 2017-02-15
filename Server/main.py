@@ -39,30 +39,39 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         global counter 
 
         # Get a job and assign a unique job number 
-        try:
-            response = {}
-            for i in range(10):
+        response = {}
+        for i in range(1000):
+            try:
                 job = jobs.__next__()
                 response[counter] = {'x':job[0], 'y':job[1]}
                 counter += 1 
-                
+            except StopIteration:
+                break
+            
+        if response == {}:  
+            self.send_response(200)
+            self.send_header('Content-type','text/plain')
+            self.end_headers()
+            self.wfile.write('done'.encode())
+        else: 
             self.send_response(200)
             self.send_header('Content-type','text/plain')
             self.end_headers()
             self.wfile.write(json.dumps(response).encode())
 
 
-        except StopIteration:
-            self.send_response(200)
-            self.send_header('Content-type','text/plain')
-            self.end_headers()
-            self.wfile.write('done'.encode())
+        
+
 
     def submit_result(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
-        post_data = json.loads(post_data.decode())
-        prin(post_data)
+        complete_jobs = json.loads(post_data.decode())
+
+        global results
+        for job_number in complete_jobs:
+            results[int(job_number)] = complete_jobs[job_number]
+
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
