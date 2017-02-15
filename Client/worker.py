@@ -1,7 +1,8 @@
 from tools import rate_limited
 import requests
 import json
-import pickle
+import numpy as np
+import scipy.misc
 
 class worker:
     def __init__(self, address):
@@ -33,9 +34,10 @@ class worker:
         z = complex(x, y)
         c = complex(x, y)
 
-        for n in range(100):
+        max_iterations = 100
+        for n in range(max_iterations):
             if abs(z) > 2:
-                return n
+                return n/max_iterations
             z = z*z + c
 
         return 0
@@ -48,11 +50,21 @@ class worker:
         response = requests.get(self.address+'/api/get_image_resolution')
         return int(response.text)
 
-
+    @rate_limited
     def get_image_data(self):
         response = requests.get(self.address+'/api/get_image_data')
         
         if response.text == 'wait':
-        	return False
+            return False
         else:
-        	pixel_list = pickle.loads(response.text.encode())
+            return json.loads(response.text)
+
+    def get_image(self):
+        resolution = self.get_image_resolution()
+        while True:
+            pixel_list = self.get_image_data()
+            if pixel_list:
+            	break
+
+        image = np.reshape(pixel_list, (-1, resolution))
+        scipy.misc.imsave('render.jpg', image)

@@ -13,4 +13,4 @@ if __name__ == '__main__':
         if result is False:
             break
 
-    workerInstance.get_image_data()
+    workerInstance.get_image()

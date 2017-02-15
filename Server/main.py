@@ -5,9 +5,10 @@ import queue
 import numpy as np
 import json
 from itertools import product
+import sys
 
 PORT = 80
-resolution = 100
+resolution = int(sys.argv[-1])
 
 # Create jobs
 cx, cy, r =  -0.74529, 0.113075, 1.5E-4
