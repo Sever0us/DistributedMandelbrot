@@ -64,9 +64,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         value = float(value)
         results[job_number] = value
         self.send_response(200)
-            self.send_header('Content-type','text/plain')
-            self.end_headers()
-            self.wfile.write('received'.encode())
+        self.send_header('Content-type','text/plain')
+        self.end_headers()
+        self.wfile.write('received'.encode())
 
     def error404(self):
         self.send_response(404)
