@@ -38,7 +38,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
         # Get a job and assign a unique job number 
         try:
-            job = jobs.next()
+            job = jobs.__next__()
             job_number = counter
             counter += 1 
 
