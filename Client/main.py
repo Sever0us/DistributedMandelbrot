@@ -8,10 +8,9 @@ if __name__ == '__main__':
     workerInstance = worker('http://ec2-54-149-191-82.us-west-2.compute.amazonaws.com:80')
 
     while True:
-        break
         result = workerInstance.get_job()
         print(workerInstance.counter)
         if result is False:
             break
 
-    print(workerInstance.get_image_resolution())
+    workerInstance.get_image_data()

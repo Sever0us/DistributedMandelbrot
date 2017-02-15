@@ -5,7 +5,6 @@ import queue
 import numpy as np
 import json
 from itertools import product
-import pickle
 
 PORT = 80
 resolution = 100
@@ -97,7 +96,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type','text/plain')
             self.end_headers()
-            self.wfile.write(pickle.dumps(results))
+            self.wfile.write(json.dumps(results).encode())
         else:
             self.send_response(200)
             self.send_header('Content-type','text/plain')

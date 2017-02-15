@@ -1,6 +1,7 @@
 from tools import rate_limited
 import requests
 import json
+import pickle
 
 class worker:
     def __init__(self, address):
@@ -51,3 +52,7 @@ class worker:
     def get_image_data(self):
         response = requests.get(self.address+'/api/get_image_data')
         
+        if response.text == 'wait':
+        	return False
+        else:
+        	pixel_list = pickle.loads(response.text.encode())
