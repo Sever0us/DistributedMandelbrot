@@ -25,9 +25,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/api/get_job':
             self.get_job()
-        elif self.path == 'api/get_image_data':
+        elif self.path == '/api/get_image_data':
             self.get_image_data()
-        elif self.path == 'api/get_image_resolution':
+        elif self.path == '/api/get_image_resolution':
             self.get_image_resolution()
         else:
             self.error404()

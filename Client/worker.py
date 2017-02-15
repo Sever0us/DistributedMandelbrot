@@ -45,10 +45,9 @@ class worker:
 
     def get_image_resolution(self):
         response = requests.get(self.address+'/api/get_image_resolution')
-        return int(response.text.decode())
+        return int(response.text)
 
 
-    def get_image_resolution(self):
+    def get_image_data(self):
         response = requests.get(self.address+'/api/get_image_data')
         
-        if response.text
