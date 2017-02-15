@@ -27,8 +27,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.error404()
 
     def do_POST(self):
-        if self.path == '/api/submit_result':
-            self.submit_result()
+        url = self.path.split('/')
+        if  url[2] == 'submit_result':
+            self.submit_result(url[3], url[4])
         else:
             self.error404()
 
@@ -57,6 +58,15 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-type','text/plain')
             self.end_headers()
             self.wfile.write('done'.encode())
+
+    def submit_result(self, job_number, value):
+        job_number = int(job_number)
+        value = float(value)
+        results[job_number] = value
+        self.send_response(200)
+            self.send_header('Content-type','text/plain')
+            self.end_headers()
+            self.wfile.write('received'.encode())
 
     def error404(self):
         self.send_response(404)
