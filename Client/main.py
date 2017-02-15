@@ -9,6 +9,6 @@ if __name__ == '__main__':
 
     while True:
 	    result = workerInstance.get_job()
-
+	    print(workerInstance.counter)
 	    if result is False:
 	    	break

@@ -23,6 +23,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/api/get_job':
             self.get_job()
+        elif self.path == 'api/get_image':
+            self.get_image()
         else:
             self.error404()
 
@@ -39,7 +41,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         # Get a job and assign a unique job number 
         try:
             response = {}
-            for i in range(50):
+            for i in range(1000):
                 job = jobs.__next__()
                 response[counter] = {'x':job[0], 'y':job[1]}
                 counter += 1 

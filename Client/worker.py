@@ -5,6 +5,7 @@ import json
 class worker:
 	def __init__(self, address):
 		self.address = address
+		self.counter = 0
 
 	@rate_limited
 	def get_job(self):
@@ -16,8 +17,8 @@ class worker:
 		calculated_values = {}
 		for job_number in data:
 			r = self.compute(data[job_number]['x'], data[job_number]['y'])
-			print((data[job_number]['x'], data[job_number]['y']), 'is', r)
 			calculated_values[job_number] = r
+			self.counter += 1
 		
 		self.submit_response(calculated_values)
 
