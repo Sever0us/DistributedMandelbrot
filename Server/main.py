@@ -2,7 +2,7 @@ import http.server
 import socketserver
 import secrets
 import queue
-import numpy
+import numpy as np
 import json
 from itertools import product
 
